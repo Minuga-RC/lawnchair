@@ -55,7 +55,7 @@ import android.window.BackEvent;
 import android.window.BackMotionEvent;
 import android.window.BackNavigationInfo;
 import android.window.IBackAnimationFinishedCallback;
-import android.window.IOnBackInvokedCallback;
+// import android.window.IOnBackInvokedCallback;
 
 import androidx.annotation.Nullable;
 import androidx.test.filters.SmallTest;
@@ -91,11 +91,11 @@ public class BackAnimationControllerTest extends ShellTestCase {
     @Mock
     private IActivityTaskManager mActivityTaskManager;
 
-    @Mock
-    private IOnBackInvokedCallback mAppCallback;
+    // @Mock
+    // private IOnBackInvokedCallback mAppCallback;
 
-    @Mock
-    private IOnBackInvokedCallback mAnimatorCallback;
+    // @Mock
+    // private IOnBackInvokedCallback mAnimatorCallback;
 
     @Mock
     private IBackAnimationFinishedCallback mBackAnimationFinishedCallback;

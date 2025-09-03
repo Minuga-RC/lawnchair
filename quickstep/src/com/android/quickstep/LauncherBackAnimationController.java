@@ -50,7 +50,7 @@ import android.view.animation.Interpolator;
 import android.window.BackEvent;
 import android.window.BackMotionEvent;
 import android.window.BackProgressAnimator;
-import android.window.IOnBackInvokedCallback;
+// import android.window.IOnBackInvokedCallback;
 
 import com.android.app.animation.Interpolators;
 import com.android.internal.policy.SystemBarUtils;
@@ -113,7 +113,7 @@ public class LauncherBackAnimationController {
     private boolean mAnimatorSetInProgress = false;
     private float mBackProgress = 0;
     private boolean mBackInProgress = false;
-    private OnBackInvokedCallbackStub mBackCallback;
+    // private OnBackInvokedCallbackStub mBackCallback;
     private IRemoteAnimationFinishedCallback mAnimationFinishedCallback;
     private BackProgressAnimator mProgressAnimator ;
     private SurfaceControl mScrimLayer;
@@ -148,91 +148,14 @@ public class LauncherBackAnimationController {
     }
 
     /**
-     * Registers {@link IOnBackInvokedCallback} to receive back dispatches from shell.
+     * Registers back callbacks to receive back dispatches from shell.
      * @param handler Handler to the thread to run the animations on.
      */
     public void registerBackCallbacks(Handler handler) {
-        mBackCallback = new OnBackInvokedCallbackStub(handler, mProgressAnimator,
-                mProgressInterpolator, this);
-        SystemUiProxy.INSTANCE.get(mLauncher).setBackToLauncherCallback(mBackCallback,
-                new RemoteAnimationRunnerStub(this));
+        // No-op: IOnBackInvokedCallback is not supported on Android 10+
     }
 
-    private static class OnBackInvokedCallbackStub extends IOnBackInvokedCallback.Stub {
-        private Handler mHandler;
-        private BackProgressAnimator mProgressAnimator;
-        private final Interpolator mProgressInterpolator;
-        // LauncherBackAnimationController has strong reference to Launcher activity, the binder
-        // callback should not hold strong reference to it to avoid memory leak.
-        private WeakReference<LauncherBackAnimationController> mControllerRef;
-
-        private OnBackInvokedCallbackStub(
-                Handler handler,
-                BackProgressAnimator progressAnimator,
-                Interpolator progressInterpolator,
-                LauncherBackAnimationController controller) {
-            mHandler = handler;
-            mProgressAnimator = progressAnimator;
-            mProgressInterpolator = progressInterpolator;
-            mControllerRef = new WeakReference<>(controller);
-        }
-
-        @Override
-        public void onBackCancelled() {
-            mHandler.post(() -> {
-                LauncherBackAnimationController controller = mControllerRef.get();
-                if (controller != null) {
-                    mProgressAnimator.onBackCancelled(controller::onCancelFinished);
-                }
-            });
-        }
-
-        @Override
-        public void onBackInvoked() {
-            mHandler.post(() -> {
-                LauncherBackAnimationController controller = mControllerRef.get();
-                if (controller != null) {
-                    controller.startTransition();
-                }
-                mProgressAnimator.reset();
-            });
-        }
-
-        @Override
-        public void onBackProgressed(BackMotionEvent backMotionEvent) {
-            mHandler.post(() -> {
-                LauncherBackAnimationController controller = mControllerRef.get();
-                if (controller == null
-                        || controller.mLauncher == null
-                        || !controller.mLauncher.isStarted()) {
-                    // Skip animating back progress if Launcher isn't visible yet.
-                    return;
-                }
-                mProgressAnimator.onBackProgressed(backMotionEvent);
-            });
-        }
-
-        @Override
-        public void onBackStarted(BackMotionEvent backEvent) {
-            mHandler.post(() -> {
-                LauncherBackAnimationController controller = mControllerRef.get();
-                if (controller != null) {
-                    controller.startBack(backEvent);
-                    mProgressAnimator.onBackStarted(backEvent, event -> {
-                        float backProgress = event.getProgress();
-                        controller.mBackProgress =
-                                mProgressInterpolator.getInterpolation(backProgress);
-                        controller.updateBackProgress(controller.mBackProgress, event);
-                    });
-                }
-            });
-        }
-
-        @Override
-        public void setTriggerBack(boolean triggerBack) {
-            // TODO(b/261654570): track touch from the Launcher process.
-        }
-    }
+    // Removed OnBackInvokedCallbackStub: not supported on Android 10+
 
     private static class RemoteAnimationRunnerStub extends IRemoteAnimationRunner.Stub {
 
@@ -274,11 +197,8 @@ public class LauncherBackAnimationController {
 
     /** Unregisters the back to launcher callback in shell. */
     public void unregisterBackCallbacks() {
-        if (mBackCallback != null) {
-            SystemUiProxy.INSTANCE.get(mLauncher).clearBackToLauncherCallback(mBackCallback);
-        }
+        // No-op: IOnBackInvokedCallback is not supported on Android 10+
         mProgressAnimator.reset();
-        mBackCallback = null;
     }
 
     private void startBack(BackMotionEvent backEvent) {

@@ -45,7 +45,7 @@ import android.view.animation.Interpolator;
 import android.window.BackEvent;
 import android.window.BackMotionEvent;
 import android.window.BackProgressAnimator;
-import android.window.IOnBackInvokedCallback;
+// import android.window.IOnBackInvokedCallback;
 
 import com.android.internal.policy.ScreenDecorationsUtils;
 import com.android.internal.policy.SystemBarUtils;
@@ -65,8 +65,7 @@ import javax.inject.Inject;
  * transition to enter full screen.
  *
  * <p>This animation is used only for apps that enable back dispatching via {@link
- * android.window.OnBackInvokedDispatcher}. The controller registers an {@link
- * IOnBackInvokedCallback} with WM Shell and receives back dispatches when a back navigation to
+ * android.window.OnBackInvokedDispatcher}. The controller receives back dispatches when a back navigation to
  * launcher starts.
  */
 @ShellMainThread

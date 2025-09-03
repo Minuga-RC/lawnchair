@@ -56,7 +56,7 @@ import android.window.BackNavigationInfo;
 import android.window.BackTouchTracker;
 import android.window.IBackAnimationFinishedCallback;
 import android.window.IBackAnimationRunner;
-import android.window.IOnBackInvokedCallback;
+// import android.window.IOnBackInvokedCallback;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.protolog.common.ProtoLog;
@@ -146,8 +146,8 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
     @VisibleForTesting
     BackAnimationAdapter mBackAnimationAdapter;
 
-    @Nullable
-    private IOnBackInvokedCallback mActiveCallback;
+    // @Nullable
+    // private IOnBackInvokedCallback mActiveCallback;
     @Nullable
     private RemoteAnimationTarget[] mApps;
 

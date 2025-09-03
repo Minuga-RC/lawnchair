@@ -26,7 +26,7 @@ import android.view.IRemoteAnimationFinishedCallback;
 import android.view.IRemoteAnimationRunner;
 import android.view.RemoteAnimationTarget;
 import android.window.IBackAnimationRunner;
-import android.window.IOnBackInvokedCallback;
+// import android.window.IOnBackInvokedCallback;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.jank.Cuj.CujType;
@@ -41,7 +41,7 @@ public class BackAnimationRunner {
     private static final int NO_CUJ = -1;
     private static final String TAG = "ShellBackPreview";
 
-    private final IOnBackInvokedCallback mCallback;
+    // private final IOnBackInvokedCallback mCallback;
     private final IRemoteAnimationRunner mRunner;
     private final @CujType int mCujType;
     private final Context mContext;
@@ -53,21 +53,19 @@ public class BackAnimationRunner {
     private boolean mAnimationCancelled;
 
     public BackAnimationRunner(
-            @NonNull IOnBackInvokedCallback callback,
             @NonNull IRemoteAnimationRunner runner,
             @NonNull Context context,
             @CujType int cujType) {
-        mCallback = callback;
+        // mCallback = callback;
         mRunner = runner;
         mCujType = cujType;
         mContext = context;
     }
 
     public BackAnimationRunner(
-            @NonNull IOnBackInvokedCallback callback,
             @NonNull IRemoteAnimationRunner runner,
             @NonNull Context context) {
-        this(callback, runner, context, NO_CUJ);
+        this(runner, context, NO_CUJ);
     }
 
     /** Returns the registered animation runner */
@@ -75,10 +73,10 @@ public class BackAnimationRunner {
         return mRunner;
     }
 
-    /** Returns the registered animation callback */
-    IOnBackInvokedCallback getCallback() {
-        return mCallback;
-    }
+    // /** Returns the registered animation callback */
+    // IOnBackInvokedCallback getCallback() {
+    //     return mCallback;
+    // }
 
     /**
      * Called from {@link IBackAnimationRunner}, it will deliver these

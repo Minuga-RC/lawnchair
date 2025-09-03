@@ -18,21 +18,20 @@ package com.android.wm.shell.back;
 
 import com.android.internal.view.AppearanceRegion;
 import android.view.IRemoteAnimationRunner;
-import android.window.IOnBackInvokedCallback;
+// import android.window.IOnBackInvokedCallback;
 
 /**
  * Interface for Launcher process to register back invocation callbacks.
  */
 interface IBackAnimation {
     /**
-     * Sets a {@link IOnBackInvokedCallback} and a {@link IRemoteAnimationRunner} to be invoked when
+     * Sets a {@link IRemoteAnimationRunner} to be invoked when
      * back navigation has type {@link BackNavigationInfo#TYPE_RETURN_TO_HOME}.
      */
-    void setBackToLauncherCallback(in IOnBackInvokedCallback callback,
-            in IRemoteAnimationRunner runner);
+    void setBackToLauncherCallback(in IRemoteAnimationRunner runner);
 
     /**
-     * Clears the previously registered {@link IOnBackInvokedCallback}.
+     * Clears the previously registered back callback.
      */
     void clearBackToLauncherCallback();
 
