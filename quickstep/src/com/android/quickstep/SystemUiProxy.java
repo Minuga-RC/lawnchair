@@ -160,7 +160,7 @@ public class SystemUiProxy implements ISystemUiProxy, NavHandle, SafeCloseable {
     private final List<Runnable> mStateChangeCallbacks = new ArrayList<>();
 
     private IBinder mOriginalTransactionToken = null;
-    private IOnBackInvokedCallback mBackToLauncherCallback;
+    // private IOnBackInvokedCallback mBackToLauncherCallback;
     private IRemoteAnimationRunner mBackToLauncherRunner;
     private IDragAndDrop mDragAndDrop;
     private final HomeVisibilityState mHomeVisibilityState = new HomeVisibilityState();
@@ -1347,30 +1347,21 @@ public class SystemUiProxy implements ISystemUiProxy, NavHandle, SafeCloseable {
     // Back navigation transitions
     //
 
-    /** Sets the launcher {@link android.window.IOnBackInvokedCallback} to shell */
-    public void setBackToLauncherCallback(IOnBackInvokedCallback callback,
-                                          IRemoteAnimationRunner runner) {
-        mBackToLauncherCallback = callback;
+    /** Sets the launcher back animation runner to shell */
+    public void setBackToLauncherCallback(IRemoteAnimationRunner runner) {
         mBackToLauncherRunner = runner;
-        if (mBackAnimation == null || mBackToLauncherCallback == null) {
+        if (mBackAnimation == null) {
             return;
         }
         try {
-            mBackAnimation.setBackToLauncherCallback(callback, runner);
+            mBackAnimation.setBackToLauncherCallback(runner);
         } catch (RemoteException | SecurityException e) {
             Log.e(TAG, "Failed call setBackToLauncherCallback", e);
         }
     }
 
-    /** Clears the previously registered {@link IOnBackInvokedCallback}.
-     *
-     * @param callback The previously registered callback instance.
-     */
-    public void clearBackToLauncherCallback(IOnBackInvokedCallback callback) {
-        if (mBackToLauncherCallback != callback) {
-            return;
-        }
-        mBackToLauncherCallback = null;
+    /** Clears the previously registered back callback. */
+    public void clearBackToLauncherCallback() {
         mBackToLauncherRunner = null;
         if (mBackAnimation == null) {
             return;
