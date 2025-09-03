@@ -295,7 +295,7 @@ public class SystemUiProxy implements ISystemUiProxy, NavHandle, SafeCloseable {
         new LinkedHashMap<>(mRemoteTransitions).forEach(this::registerRemoteTransition);
         setupTransactionQueue();
         registerRecentTasksListener(mRecentTasksListener);
-        setBackToLauncherCallback(mBackToLauncherCallback, mBackToLauncherRunner);
+    setBackToLauncherCallback(mBackToLauncherRunner);
         setUnfoldAnimationListener(mUnfoldAnimationListener);
         setDesktopTaskListener(mDesktopTaskListener);
         setAssistantOverridesRequested(
@@ -1625,7 +1625,7 @@ public class SystemUiProxy implements ISystemUiProxy, NavHandle, SafeCloseable {
         pw.println("\tmRecentTasks=" + mRecentTasks);
         pw.println("\tmRecentTasksListener=" + mRecentTasksListener);
         pw.println("\tmBackAnimation=" + mBackAnimation);
-        pw.println("\tmBackToLauncherCallback=" + mBackToLauncherCallback);
+    // pw.println("\tmBackToLauncherCallback=" + mBackToLauncherCallback);
         pw.println("\tmBackToLauncherRunner=" + mBackToLauncherRunner);
         pw.println("\tmDesktopMode=" + mDesktopMode);
         pw.println("\tmDesktopTaskListener=" + mDesktopTaskListener);

@@ -367,18 +367,16 @@ public class BackAnimationController implements RemoteCallable<BackAnimationCont
             mController = controller;
         }
 
-        @Override
-        public void setBackToLauncherCallback(IOnBackInvokedCallback callback,
-                IRemoteAnimationRunner runner) {
-            executeRemoteCallWithTaskPermission(mController, "setBackToLauncherCallback",
-                    (controller) -> controller.registerAnimation(
-                            BackNavigationInfo.TYPE_RETURN_TO_HOME,
-                            new BackAnimationRunner(
-                                    callback,
-                                    runner,
-                                    controller.mContext,
-                                    CUJ_PREDICTIVE_BACK_HOME)));
-        }
+    @Override
+    public void setBackToLauncherCallback(IRemoteAnimationRunner runner) {
+        executeRemoteCallWithTaskPermission(mController, "setBackToLauncherCallback",
+            (controller) -> controller.registerAnimation(
+                BackNavigationInfo.TYPE_RETURN_TO_HOME,
+                new BackAnimationRunner(
+                    runner,
+                    controller.mContext,
+                    CUJ_PREDICTIVE_BACK_HOME)));
+    }
 
         @Override
         public void clearBackToLauncherCallback() {
